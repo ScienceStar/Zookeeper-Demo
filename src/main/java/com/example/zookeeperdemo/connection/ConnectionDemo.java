@@ -37,7 +37,7 @@ public class ConnectionDemo {
             System.out.println("修改之前的值:" + new String(bytes));
 
             //修改值
-            zooKeeper.setData("/zk-persis-mike", "1".getBytes(), stat.getVersion());
+            zooKeeper.setData("/zk-persis-mike", "welcome".getBytes(), stat.getVersion());
             byte[] bytes2 = zooKeeper.getData("/zk-persis-mike", null, stat);
             System.out.println("修改之后的值:" + new String(bytes2));
             zooKeeper.close();
