@@ -6,6 +6,7 @@ import org.apache.curator.framework.recipes.cache.NodeCache;
 import org.apache.curator.framework.recipes.cache.NodeCacheListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.data.Stat;
 import org.junit.Test;
 
 /**
@@ -38,8 +39,16 @@ public class CuratorDemo {
     }
 
     @Test
-    public void updateNode(){
+    public void updateNode() throws Exception {
+        Stat stat = new Stat();
+        curatorFramework.getData().storingStatIn(stat).forPath("/mike/node1");
+        curatorFramework.setData().withVersion(stat.getVersion()).forPath("/mike/node1","welcome to china".getBytes());
+        curatorFramework.close();
+    }
 
+    @Test
+    public void deleteNode() throws Exception {
+        curatorFramework.delete().deletingChildrenIfNeeded().forPath("/mike/node1");
     }
 
     /**
